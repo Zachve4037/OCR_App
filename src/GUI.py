@@ -18,7 +18,7 @@ class GUI:
 
         for frame in (self.main_frame, self.ocr_frame, self.test_frame):
             frame.grid(row=0, column=0, sticky="nsew")
-            frame.grid_columnconfigure(0, weight=1)  # Center column in each frame
+            frame.grid_columnconfigure(0, weight=1)
 
         self.main_menu()
         self.mainWin.mainloop()
@@ -27,7 +27,6 @@ class GUI:
         self.clear_frame(self.main_frame)
         self.main_frame.tkraise()
 
-        # Configure the main frame's grid
         self.main_frame.grid_columnconfigure(0, weight=1)
 
         self.label = tk.Label(self.main_frame, text="Welcome to OCR Application", font=("Arial", 25, "bold"))
@@ -55,15 +54,16 @@ class GUI:
         self.clear_frame(self.ocr_frame)
         self.ocr_frame.tkraise()
 
-        # Configure the OCR frame's grid
         self.ocr_frame.grid_columnconfigure(0, weight=1)
+        self.ocr_frame.grid_columnconfigure(1, weight=1)
+        self.ocr_frame.grid_columnconfigure(2, weight=1)
 
         self.ocr_label = tk.Label(self.ocr_frame, text="OCR System", font=("Arial", 20, "bold"))
-        self.ocr_label.grid(pady=20)
+        self.ocr_label.grid(pady=20, column = 0, columnspan = 3, sticky = "")
 
         # Create a container frame for buttons
         self.button_frame = tk.Frame(self.ocr_frame)
-        self.button_frame.grid(pady=20)
+        self.button_frame.grid(pady=20, column = 0)
 
         self.upload_btn = tk.Button(self.button_frame, text="Upload Image", **self.btn_style)
         self.upload_btn.grid(pady=10)
@@ -75,18 +75,19 @@ class GUI:
         self.clear_frame(self.test_frame)
         self.test_frame.tkraise()
 
-        # Configure the test frame's grid
         self.test_frame.grid_columnconfigure(0, weight=1)
+        self.test_frame.grid_columnconfigure(1, weight=1)
+        self.test_frame.grid_columnconfigure(2, weight=1)
 
         self.test_label = tk.Label(self.test_frame, text="OCR Testing", font=("Arial", 20, "bold"))
-        self.test_label.grid(pady=20)
+        self.test_label.grid(pady=20, column = 0, columnspan = 3, sticky = "")
 
         # Create a container frame for buttons
         self.button_frame = tk.Frame(self.test_frame)
-        self.button_frame.grid(pady=20)
+        self.button_frame.grid(pady=20, column = 0)
 
         self.back_btn = tk.Button(self.button_frame, text="Back to Main", **self.btn_style, command=self.main_menu)
-        self.back_btn.grid(pady=20)
+        self.back_btn.grid(pady=20, column = 0)
 
     def clear_frame(self, frame):
         for widget in frame.winfo_children():
