@@ -4,7 +4,7 @@ is a simple application using several open source ocr systems listed below. This
 OCR Solutions for Text Recognition in Real-World Scenes and Structured Documents
 # OCR Systems included in application
 Tessract
-OCRmyPDF
+<br/ > OCRmyPDF
 DocTR
 EasyOCR
 PaddleOCR
