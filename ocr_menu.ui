@@ -86,7 +86,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>270</y>
+      <y>250</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -107,7 +107,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>360</y>
+      <y>520</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -122,6 +122,70 @@
     </property>
     <property name="text">
      <string>Back to Main</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="tesseract_btn">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>350</y>
+      <width>150</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>Tesseract</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="ocrmypdf_btn">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>380</y>
+      <width>150</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>OCRmyPDF</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="doctr_btn">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>410</y>
+      <width>150</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>DocTR</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="easyocr_btn">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>440</y>
+      <width>150</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>EasyOCR</string>
     </property>
    </widget>
   </widget>
