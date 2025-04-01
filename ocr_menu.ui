@@ -64,7 +64,7 @@
    <widget class="QPushButton" name="upload_btn">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>90</x>
       <y>180</y>
       <width>200</width>
       <height>50</height>
@@ -85,7 +85,7 @@
    <widget class="QPushButton" name="convert_btn">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>90</x>
       <y>250</y>
       <width>200</width>
       <height>50</height>
@@ -106,8 +106,8 @@
    <widget class="QPushButton" name="back_btn">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>520</y>
+      <x>90</x>
+      <y>510</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -127,7 +127,7 @@
    <widget class="QRadioButton" name="tesseract_btn">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>90</x>
       <y>350</y>
       <width>150</width>
       <height>25</height>
@@ -143,7 +143,7 @@
    <widget class="QRadioButton" name="ocrmypdf_btn">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>90</x>
       <y>380</y>
       <width>150</width>
       <height>25</height>
@@ -159,7 +159,7 @@
    <widget class="QRadioButton" name="doctr_btn">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>90</x>
       <y>410</y>
       <width>150</width>
       <height>25</height>
@@ -175,7 +175,7 @@
    <widget class="QRadioButton" name="easyocr_btn">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>90</x>
       <y>440</y>
       <width>150</width>
       <height>25</height>
@@ -191,10 +191,10 @@
    <widget class="ZoomableGraphicsView" name="image_view">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>190</y>
-      <width>256</width>
-      <height>321</height>
+      <x>375</x>
+      <y>160</y>
+      <width>330</width>
+      <height>411</height>
      </rect>
     </property>
    </widget>
@@ -211,13 +211,13 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
-<customwidgets>
+ <customwidgets>
   <customwidget>
    <class>ZoomableGraphicsView</class>
    <extends>QGraphicsView</extends>
    <header>ZoomableGraphicsView.h</header>
   </customwidget>
-</customwidgets>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
