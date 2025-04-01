@@ -24,11 +24,13 @@ class GUI(QMainWindow):
         self.ocr_win.back_btn.clicked.connect(self.show_main_menu)
         self.test_win.back_btn.clicked.connect(self.show_main_menu)
 
-        self.loader_test = Loader(self.test_win.findChild(ZoomableGraphicsView, "image_view"))
-        self.test_win.upload_btn.clicked.connect(self.loader_test.load_image)
+        test_ocr_view = self.test_win.findChild(ZoomableGraphicsView, "image_view")
+        self.loader_test_img = Loader(test_ocr_view, "Image")
+        self.test_win.upload_btn.clicked.connect(self.loader_test_img.load_image)
 
-        self.loader_ocr = Loader(self.ocr_win.findChild(ZoomableGraphicsView, "image_view"))
-        self.ocr_win.upload_btn.clicked.connect(self.loader_ocr.load_image)
+        ocr_img_view = self.ocr_win.findChild(ZoomableGraphicsView, "image_view")
+        self.loader_ocr_img = Loader(ocr_img_view, "Image")
+        self.ocr_win.upload_btn.clicked.connect(self.loader_ocr_img.load_image)
 
         self.central_widget.setCurrentWidget(self.main_win)
         self.show()

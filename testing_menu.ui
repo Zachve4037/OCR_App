@@ -68,8 +68,8 @@
    <widget class="QPushButton" name="back_btn">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>270</y>
+      <x>90</x>
+      <y>390</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -89,7 +89,7 @@
    <widget class="QPushButton" name="upload_btn">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>90</x>
       <y>180</y>
       <width>200</width>
       <height>50</height>
@@ -110,8 +110,8 @@
    <widget class="QPushButton" name="annotation_btn">
     <property name="geometry">
      <rect>
-      <x>850</x>
-      <y>180</y>
+      <x>90</x>
+      <y>250</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -131,8 +131,8 @@
    <widget class="QPushButton" name="test_btn">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>180</y>
+      <x>90</x>
+      <y>320</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -152,10 +152,20 @@
    <widget class="ZoomableGraphicsView" name="image_view">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>250</y>
-      <width>256</width>
-      <height>321</height>
+      <x>375</x>
+      <y>160</y>
+      <width>330</width>
+      <height>411</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="ZoomableGraphicsView" name="annotation_view">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>160</y>
+      <width>330</width>
+      <height>411</height>
      </rect>
     </property>
    </widget>
