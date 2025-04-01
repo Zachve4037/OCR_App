@@ -1,6 +1,7 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget
 from Loader import Loader
+from ZoomableGraphicsView import ZoomableGraphicsView
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -23,11 +24,10 @@ class GUI(QMainWindow):
         self.ocr_win.back_btn.clicked.connect(self.show_main_menu)
         self.test_win.back_btn.clicked.connect(self.show_main_menu)
 
-        # loader for the ocr and testing menu
-        self.loader_test = Loader(self.test_win.findChild(QLabel, "image_label"))
+        self.loader_test = Loader(self.test_win.findChild(ZoomableGraphicsView, "image_view"))
         self.test_win.upload_btn.clicked.connect(self.loader_test.load_image)
 
-        self.loader_ocr = Loader(self.ocr_win.findChild(QLabel, "image_label"))
+        self.loader_ocr = Loader(self.ocr_win.findChild(ZoomableGraphicsView, "image_view"))
         self.ocr_win.upload_btn.clicked.connect(self.loader_ocr.load_image)
 
         self.central_widget.setCurrentWidget(self.main_win)

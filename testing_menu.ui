@@ -149,20 +149,14 @@
      <string>Test</string>
     </property>
    </widget>
-   <widget class="QLabel" name="image_label">
+   <widget class="ZoomableGraphicsView" name="image_view">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>260</y>
-      <width>281</width>
+      <x>410</x>
+      <y>250</y>
+      <width>256</width>
       <height>321</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(19, 49, 92);</string>
-    </property>
-    <property name="text">
-     <string/>
     </property>
    </widget>
   </widget>
@@ -178,6 +172,13 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ZoomableGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>ZoomableGraphicsView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
