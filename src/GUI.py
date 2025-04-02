@@ -1,7 +1,9 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton
 from Loader import Loader
 from ZoomableGraphicsView import ZoomableGraphicsView
+from src.Tester import Tester
+
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -39,6 +41,9 @@ class GUI(QMainWindow):
         self.central_widget.setCurrentWidget(self.main_win)
         self.show()
 
+        self.test_win.test_btn = self.test_win.findChild(QPushButton, "test_btn")
+        self.test_win.test_btn.clicked.connect(self.perform_test)
+
     def show_main_menu(self):
         self.central_widget.setCurrentWidget(self.main_win)
 
@@ -47,6 +52,30 @@ class GUI(QMainWindow):
 
     def show_testing_menu(self):
         self.central_widget.setCurrentWidget(self.test_win)
+
+    def perform_test(self):
+        try:
+            image_path = self.loader_test_img.get_image()
+            annotation = self.loader_test_text.get_annotation()
+
+            if not image_path:
+                print("Image path is missing. Please load an image.")
+                return
+            if not annotation:
+                print("Annotation is missing. Please load an annotation file.")
+                return
+
+            print(f"Loaded image: {image_path}")
+            print(f"Loaded annotation: {annotation}")
+
+            tester = Tester()
+            metrics = tester.test_ocr(image_path, annotation)
+
+            for system, metric in metrics.items():
+                print(f"{system} Metrics: {metric} \n")
+
+        except Exception as e:
+            print(f"An error occurred during the test: {e}")
 
 if __name__ == "__main__":
     app = QApplication([])
