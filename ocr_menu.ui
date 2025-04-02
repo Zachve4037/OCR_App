@@ -156,27 +156,11 @@
      <string>OCRmyPDF</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="doctr_btn">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>410</y>
-      <width>150</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #eef4ed; font-size: 14px;</string>
-    </property>
-    <property name="text">
-     <string>DocTR</string>
-    </property>
-   </widget>
    <widget class="QRadioButton" name="easyocr_btn">
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>440</y>
+      <y>410</y>
       <width>150</width>
       <height>25</height>
      </rect>
