@@ -65,9 +65,6 @@ class GUI(QMainWindow):
                 print("Annotation is missing. Please load an annotation file.")
                 return
 
-            print(f"Loaded image: {image_path}")
-            print(f"Loaded annotation: {annotation}")
-
             tester = Tester()
             metrics = tester.test_ocr(image_path, annotation)
 

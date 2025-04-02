@@ -21,12 +21,10 @@ class Tester:
         return metrics
 
     def normalize_text(self, text):
-        """Normalize text by lowercasing and removing extra spaces"""
         text = re.sub(r"\s+", " ", text).strip()
         return text
 
     def calculate_cer(self, true_text, ocr_text):
-        """Calculate Character Error Rate (CER)"""
         true_text = self.normalize_text(true_text)
         ocr_text = self.normalize_text(ocr_text)
         ref_chars = list(true_text)
@@ -37,7 +35,6 @@ class Tester:
         return cer
 
     def calculate_wer(self, true_text, ocr_text):
-        """Calculate Word Error Rate (WER)"""
         true_text = self.normalize_text(true_text)
         ocr_text = self.normalize_text(ocr_text)
         ref_words = true_text.split()
