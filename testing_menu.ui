@@ -159,12 +159,22 @@
      </rect>
     </property>
    </widget>
-   <widget class="ZoomableGraphicsView" name="annotation_view">
+   <widget class="QGraphicsView" name="annotation_view">
     <property name="geometry">
      <rect>
       <x>720</x>
       <y>160</y>
       <width>330</width>
+      <height>411</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="text_edit">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>160</y>
+      <width>331</width>
       <height>411</height>
      </rect>
     </property>

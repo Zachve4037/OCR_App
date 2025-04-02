@@ -12,12 +12,22 @@ class Loader:
 
     def load_image(self):
         options = QFileDialog.Options()
-        file_name, _ = QFileDialog.getOpenFileName(None, "Open Image File", "", "Images (*.png *.xpm *.jpg *.bmp *.gif)", options=options)
+        file_name, _ = QFileDialog.getOpenFileName(None, "Open Image File", "", "Images (*.png *.xpm *.jpg *.bmp *.gif)", options = options)
         if file_name:
             pixmap = QPixmap(file_name)
             self.scene.clear()
             self.scene.addPixmap(pixmap)
             self.view.fitInView(self.scene.itemsBoundingRect(), mode=1)
+
+    def load_text(self):
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getOpenFileName(None, "Open Annotation File", "", "Text Files (*.txt)", options = options)
+        if file_name:
+            with open(file_name, 'r') as file:
+                text = file.read()
+                self.scene.clear()
+                self.add_background_text(text)
+
 
     def add_background_text(self, text):
         text_item = QGraphicsTextItem(text)
