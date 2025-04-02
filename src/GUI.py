@@ -1,5 +1,5 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit
 from Loader import Loader
 from ZoomableGraphicsView import ZoomableGraphicsView
 
@@ -27,6 +27,10 @@ class GUI(QMainWindow):
         test_ocr_view = self.test_win.findChild(ZoomableGraphicsView, "image_view")
         self.loader_test_img = Loader(test_ocr_view, "Image")
         self.test_win.upload_btn.clicked.connect(self.loader_test_img.load_image)
+
+        test_text_view = self.test_win.findChild(QGraphicsView, "annotation_view")
+        self.loader_test_text = Loader(test_text_view, "Annotation")
+        self.test_win.annotation_btn.clicked.connect(self.loader_test_text.load_text)
 
         ocr_img_view = self.ocr_win.findChild(ZoomableGraphicsView, "image_view")
         self.loader_ocr_img = Loader(ocr_img_view, "Image")
