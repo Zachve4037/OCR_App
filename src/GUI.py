@@ -1,3 +1,5 @@
+import traceback
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, \
     QMessageBox
@@ -66,16 +68,17 @@ class GUI(QMainWindow):
                 print("Annotation is missing. Please load an annotation file.")
                 return
 
+            print(f"Image path: {image_path}")
+            print(f"Annotation: {annotation}")
+
             tester = Tester()
             metrics = tester.test_ocr(image_path, annotation)
-
-            # for system, metric in metrics.items():
-            #     print(f"{system} Metrics: {metric} \n")
 
             self.print_metric(metrics)
 
         except Exception as e:
             print(f"An error occurred during the test: {e}")
+            traceback.print_exc()
 
     def print_metric(self, metrics):
         results = QMessageBox()
