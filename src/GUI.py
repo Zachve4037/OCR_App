@@ -1,5 +1,6 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, \
+    QMessageBox
 from Loader import Loader
 from ZoomableGraphicsView import ZoomableGraphicsView
 from src.Tester import Tester
@@ -68,11 +69,24 @@ class GUI(QMainWindow):
             tester = Tester()
             metrics = tester.test_ocr(image_path, annotation)
 
-            for system, metric in metrics.items():
-                print(f"{system} Metrics: {metric} \n")
+            # for system, metric in metrics.items():
+            #     print(f"{system} Metrics: {metric} \n")
+
+            self.print_metric(metrics)
 
         except Exception as e:
             print(f"An error occurred during the test: {e}")
+
+    def print_metric(self, metrics):
+        results = QMessageBox()
+        results.setWindowTitle("OCR Metrics")
+        formatted_metrics = "\n".join(
+            [f"{system} Metrics:\nCER: {metric['CER']:.2f}\nWER: {metric['WER']:.2f}"
+            for system, metric in
+            metrics.items()]
+        )
+        results.setText(formatted_metrics)
+        results.exec_()
 
 if __name__ == "__main__":
     app = QApplication([])
