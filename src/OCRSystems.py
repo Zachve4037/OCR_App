@@ -67,4 +67,5 @@ class OCRSystem:
             "OCRmyPDF": self.ocr_ocrmypdf(image_path, output_pdf="OCRmyPDF.pdf", dpi=300),
             "EasyOCR": self.ocr_easyocr(image_path),
         }
+
         return results
