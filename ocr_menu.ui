@@ -79,7 +79,7 @@
      <string notr="true">background-color: #8da9c4; color: #eef4ed; border-radius: 8px;</string>
     </property>
     <property name="text">
-     <string>Upload Image</string>
+     <string>Open Image</string>
     </property>
    </widget>
    <widget class="QPushButton" name="convert_btn">
