@@ -13,48 +13,63 @@ class GUI(QMainWindow):
         super().__init__()
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
-        self.setGeometry(300, 300, 1080, 640)
+        self.setGeometry(85, 300, 1750, 640)
         self.setWindowTitle("OCR Application")
 
         self.main_win = uic.loadUi("main_win.ui")
-        self.ocr_win = uic.loadUi("ocr_menu.ui")
-        self.test_win = uic.loadUi("testing_menu.ui")
+        self.image_win = uic.loadUi("image_menu.ui")
+        self.dataset_win = uic.loadUi("dataset_menu.ui")
 
         self.central_widget.addWidget(self.main_win)
-        self.central_widget.addWidget(self.ocr_win)
-        self.central_widget.addWidget(self.test_win)
+        self.central_widget.addWidget(self.image_win)
+        self.central_widget.addWidget(self.dataset_win)
 
-        self.main_win.ocr_sys_button.clicked.connect(self.show_ocr_menu)
-        self.main_win.testing_button.clicked.connect(self.show_testing_menu)
-        self.ocr_win.back_btn.clicked.connect(self.show_main_menu)
-        self.test_win.back_btn.clicked.connect(self.show_main_menu)
+        self.main_win.image_button.clicked.connect(self.show_ocr_menu)
+        self.main_win.dataset_button.clicked.connect(self.show_testing_menu)
+        self.image_win.back_btn.clicked.connect(self.show_main_menu)
+        self.dataset_win.back_btn.clicked.connect(self.show_main_menu)
 
-        test_ocr_view = self.test_win.findChild(ZoomableGraphicsView, "image_view")
-        self.loader_test_img = Loader(test_ocr_view, "Image")
-        self.test_win.upload_btn.clicked.connect(self.loader_test_img.load_image)
+        dataset_image_view = self.dataset_win.findChild(ZoomableGraphicsView, "image_view")
+        self.loader_test_img = Loader(dataset_image_view, "Image")
+        self.dataset_win.upload_btn.clicked.connect(self.loader_test_img.load_image)
 
-        test_text_view = self.test_win.findChild(QGraphicsView, "annotation_view")
-        self.loader_test_text = Loader(test_text_view, "Annotation")
-        self.test_win.annotation_btn.clicked.connect(self.loader_test_text.load_text)
+        dataset_annotation_view = self.dataset_win.findChild(QGraphicsView, "annotation_view")
+        self.loader_test_text = Loader(dataset_annotation_view, "Annotation")
+        self.dataset_win.annotation_btn.clicked.connect(self.loader_test_text.load_text)
 
-        ocr_img_view = self.ocr_win.findChild(ZoomableGraphicsView, "image_view")
-        self.loader_ocr_img = Loader(ocr_img_view, "Image")
-        self.ocr_win.upload_btn.clicked.connect(self.loader_ocr_img.load_image)
+        dataset_results_view = self.dataset_win.findChild(QGraphicsView, "results_view")
+        self.loader_test_img = Loader(dataset_results_view, "Results")
+
+        dataset_stats_view = self.dataset_win.findChild(QGraphicsView, "stats_view")
+        self.loader_test_img = Loader(dataset_stats_view, "Statistics")
+
+        image_image_view = self.image_win.findChild(ZoomableGraphicsView, "image_view")
+        self.loader_ocr_img = Loader(image_image_view, "Image")
+        self.image_win.upload_btn.clicked.connect(self.loader_ocr_img.load_image)
+
+        image_annotation_view = self.image_win.findChild(QGraphicsView, "annotation_view")
+        self.loader_test_text = Loader(image_annotation_view, "Annotation")
+
+        image_results_view = self.image_win.findChild(QGraphicsView, "results_view")
+        self.loader_test_img = Loader(image_results_view, "Results")
+
+        image_stats_view = self.image_win.findChild(QGraphicsView, "stats_view")
+        self.loader_test_img = Loader(image_stats_view, "Statistics")
 
         self.central_widget.setCurrentWidget(self.main_win)
         self.show()
 
-        self.test_win.test_btn = self.test_win.findChild(QPushButton, "test_btn")
-        self.test_win.test_btn.clicked.connect(self.perform_test)
+        self.dataset_win.test_btn = self.dataset_win.findChild(QPushButton, "test_btn")
+        self.dataset_win.test_btn.clicked.connect(self.perform_test)
 
     def show_main_menu(self):
         self.central_widget.setCurrentWidget(self.main_win)
 
     def show_ocr_menu(self):
-        self.central_widget.setCurrentWidget(self.ocr_win)
+        self.central_widget.setCurrentWidget(self.image_win)
 
     def show_testing_menu(self):
-        self.central_widget.setCurrentWidget(self.test_win)
+        self.central_widget.setCurrentWidget(self.dataset_win)
 
     def perform_test(self):
         try:
