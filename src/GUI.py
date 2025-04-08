@@ -1,5 +1,4 @@
 import traceback
-
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, \
     QMessageBox
@@ -30,31 +29,32 @@ class GUI(QMainWindow):
         self.dataset_win.back_btn.clicked.connect(self.show_main_menu)
 
         dataset_image_view = self.dataset_win.findChild(ZoomableGraphicsView, "image_view")
-        self.loader_test_img = Loader(dataset_image_view, "Image")
-        self.dataset_win.upload_btn.clicked.connect(self.loader_test_img.load_image)
+        self.loader_dataset_img = Loader(dataset_image_view, "Image")
+        self.dataset_win.upload_img_btn.clicked.connect(self.loader_dataset_img.load_image)
 
         dataset_annotation_view = self.dataset_win.findChild(QGraphicsView, "annotation_view")
-        self.loader_test_text = Loader(dataset_annotation_view, "Annotation")
-        self.dataset_win.annotation_btn.clicked.connect(self.loader_test_text.load_text)
+        self.loader_dataset_ann = Loader(dataset_annotation_view, "Annotation")
+        self.dataset_win.upload_ann_btn.clicked.connect(self.loader_dataset_ann.load_text)
 
         dataset_results_view = self.dataset_win.findChild(QGraphicsView, "results_view")
-        self.loader_test_img = Loader(dataset_results_view, "Results")
+        self.loader_dataset_res = Loader(dataset_results_view, "Results")
 
         dataset_stats_view = self.dataset_win.findChild(QGraphicsView, "stats_view")
-        self.loader_test_img = Loader(dataset_stats_view, "Statistics")
+        self.loader_dataset_stats = Loader(dataset_stats_view, "Statistics")
 
         image_image_view = self.image_win.findChild(ZoomableGraphicsView, "image_view")
-        self.loader_ocr_img = Loader(image_image_view, "Image")
-        self.image_win.upload_btn.clicked.connect(self.loader_ocr_img.load_image)
+        self.loader_image_img = Loader(image_image_view, "Image")
+        self.image_win.open_img_btn.clicked.connect(self.loader_image_img.load_image)
 
         image_annotation_view = self.image_win.findChild(QGraphicsView, "annotation_view")
-        self.loader_test_text = Loader(image_annotation_view, "Annotation")
+        self.loader_image_ann = Loader(image_annotation_view, "Annotation")
+        self.image_win.upload_ann_btn.clicked.connect(self.loader_image_ann.load_text)
 
         image_results_view = self.image_win.findChild(QGraphicsView, "results_view")
-        self.loader_test_img = Loader(image_results_view, "Results")
+        self.loader_image_res = Loader(image_results_view, "Results")
 
         image_stats_view = self.image_win.findChild(QGraphicsView, "stats_view")
-        self.loader_test_img = Loader(image_stats_view, "Statistics")
+        self.loader_image_stats = Loader(image_stats_view, "Statistics")
 
         self.central_widget.setCurrentWidget(self.main_win)
         self.show()
