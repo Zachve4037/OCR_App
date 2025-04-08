@@ -10,6 +10,12 @@
     <height>640</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>1750</width>
+    <height>640</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>OCR_App</string>
   </property>
@@ -44,7 +50,7 @@
    <widget class="QPushButton" name="back_btn">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>75</x>
       <y>370</y>
       <width>200</width>
       <height>50</height>
@@ -62,10 +68,10 @@
      <string>Back to Main</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="upload_btn">
+   <widget class="QPushButton" name="upload_img_btn">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>75</x>
       <y>160</y>
       <width>200</width>
       <height>50</height>
@@ -83,10 +89,10 @@
      <string>Open Image</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="annotation_btn">
+   <widget class="QPushButton" name="upload_ann_btn">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>75</x>
       <y>230</y>
       <width>200</width>
       <height>50</height>
@@ -107,7 +113,7 @@
    <widget class="QPushButton" name="test_btn">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>75</x>
       <y>300</y>
       <width>200</width>
       <height>50</height>
@@ -128,7 +134,7 @@
    <widget class="ZoomableGraphicsView" name="image_view">
     <property name="geometry">
      <rect>
-      <x>365</x>
+      <x>355</x>
       <y>160</y>
       <width>330</width>
       <height>411</height>
@@ -138,7 +144,7 @@
    <widget class="QGraphicsView" name="annotation_view">
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>700</x>
       <y>160</y>
       <width>330</width>
       <height>411</height>
@@ -148,7 +154,7 @@
    <widget class="QGraphicsView" name="results_view">
     <property name="geometry">
      <rect>
-      <x>1055</x>
+      <x>1045</x>
       <y>160</y>
       <width>330</width>
       <height>411</height>
@@ -158,7 +164,7 @@
    <widget class="QGraphicsView" name="stats_view">
     <property name="geometry">
      <rect>
-      <x>1400</x>
+      <x>1390</x>
       <y>160</y>
       <width>330</width>
       <height>411</height>
