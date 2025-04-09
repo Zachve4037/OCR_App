@@ -1,6 +1,6 @@
 import os
 import shutil
-
+import PyPDF2
 import img2pdf
 import pytesseract
 import ocrmypdf
@@ -20,29 +20,31 @@ class OCRSystem:
             f.write(img2pdf.convert(image_path))
 
     def ocr_ocrmypdf(self, input_pdf, output_pdf=None, dpi=300):
-        # Ensure output PDF name is provided
         if output_pdf is None:
             output_pdf = input_pdf.rsplit('.', 1)[0] + "_OCR.pdf"
-
-        # Create a temporary copy only if input is not a PDF
         if not input_pdf.endswith('.pdf'):
             temp_input = input_pdf.rsplit('.', 1)[0] + "_temp." + input_pdf.rsplit('.', 1)[1]
             if temp_input == input_pdf:
                 temp_input = input_pdf.rsplit('.', 1)[0] + "_copy." + input_pdf.rsplit('.', 1)[1]
-
-            shutil.copy(input_pdf, temp_input)  # Copy the original file
+            shutil.copy(input_pdf, temp_input)
         else:
-            temp_input = input_pdf  # No copy needed for PDFs
-
+            temp_input = input_pdf
         try:
             ocrmypdf.ocr(temp_input, output_pdf, language='eng', image_dpi=dpi)
-            print(f"OCR completed successfully. Output saved to {output_pdf}")
-            return output_pdf
+            print(f"OCR completed successfully. Extracting text from {output_pdf}...")
+            extracted_text = ""
+            with open(output_pdf, "rb") as pdf_file:
+                reader = PyPDF2.PdfReader(pdf_file)
+                for page in reader.pages:
+                    extracted_text += page.extract_text()
+
+            return extracted_text
+
         except Exception as e:
             print(f"Error during OCR process: {e}")
             return None
+
         finally:
-            # Clean up temporary file if created
             if temp_input != input_pdf and os.path.exists(temp_input):
                 os.remove(temp_input)
 
@@ -67,5 +69,4 @@ class OCRSystem:
             "OCRmyPDF": self.ocr_ocrmypdf(image_path, output_pdf="OCRmyPDF.pdf", dpi=300),
             "EasyOCR": self.ocr_easyocr(image_path),
         }
-
         return results

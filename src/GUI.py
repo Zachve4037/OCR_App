@@ -59,8 +59,11 @@ class GUI(QMainWindow):
         self.central_widget.setCurrentWidget(self.main_win)
         self.show()
 
+        self.image_win.test_btn = self.image_win.findChild(QPushButton, "test_btn")
+        self.image_win.test_btn.clicked.connect(self.perform_test)
+
         self.dataset_win.test_btn = self.dataset_win.findChild(QPushButton, "test_btn")
-        self.dataset_win.test_btn.clicked.connect(self.perform_test)
+        #self.dataset_win.test_btn.clicked.connect(self.perform_test, self.loader_dataset_img, self.loader_dataset_ann)
 
     def show_main_menu(self):
         self.central_widget.setCurrentWidget(self.main_win)
@@ -73,38 +76,30 @@ class GUI(QMainWindow):
 
     def perform_test(self):
         try:
-            image_path = self.loader_test_img.get_image()
-            annotation = self.loader_test_text.get_annotation()
-
+            image_path = self.loader_image_img.get_image()
+            annotation = self.loader_image_ann.get_annotation()
             if not image_path:
                 print("Image path is missing. Please load an image.")
                 return
             if not annotation:
                 print("Annotation is missing. Please load an annotation file.")
                 return
-
-            print(f"Image path: {image_path}")
-            print(f"Annotation: {annotation}")
-
             tester = Tester()
-            metrics = tester.test_ocr(image_path, annotation)
-
-            self.print_metric(metrics)
+            metrics, ocr_results = tester.test_ocr(image_path, annotation)
+            metricss = {
+                system: {
+                    "CER": metrics[system].get("CER", "N/A"),
+                    "WER": metrics[system].get("WER", "N/A")
+                }
+                for system in ocr_results.keys()
+            }
+            self.loader_image_stats.display_metrics(metricss)
+            self.loader_image_res.display_results(ocr_results)
 
         except Exception as e:
             print(f"An error occurred during the test: {e}")
             traceback.print_exc()
 
-    def print_metric(self, metrics):
-        results = QMessageBox()
-        results.setWindowTitle("OCR Metrics")
-        formatted_metrics = "\n".join(
-            [f"{system} Metrics:\nCER: {metric['CER']:.2f}\nWER: {metric['WER']:.2f}"
-            for system, metric in
-            metrics.items()]
-        )
-        results.setText(formatted_metrics)
-        results.exec_()
 
 if __name__ == "__main__":
     app = QApplication([])

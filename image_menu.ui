@@ -67,7 +67,7 @@
      <string>Open Image</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="convert_btn">
+   <widget class="QPushButton" name="test_btn">
     <property name="geometry">
      <rect>
       <x>75</x>
@@ -85,7 +85,7 @@
      <string notr="true">background-color: #8da9c4; color: #eef4ed; border-radius: 8px;</string>
     </property>
     <property name="text">
-     <string>Convert</string>
+     <string>Test</string>
     </property>
    </widget>
    <widget class="QPushButton" name="back_btn">
@@ -167,29 +167,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="description2">
-    <property name="geometry">
-     <rect>
-      <x>705</x>
-      <y>90</y>
-      <width>341</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>16</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #eef4ed;</string>
-    </property>
-    <property name="text">
-     <string>Test OCR Systems on whole dataset</string>
-    </property>
-   </widget>
    <widget class="QGraphicsView" name="annotation_view">
     <property name="geometry">
      <rect>
@@ -239,6 +216,29 @@
     </property>
     <property name="text">
      <string>Open Annotation</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="description1">
+    <property name="geometry">
+     <rect>
+      <x>585</x>
+      <y>90</y>
+      <width>581</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed;</string>
+    </property>
+    <property name="text">
+     <string>Extract text from image or test OCR Systems on single image</string>
     </property>
    </widget>
   </widget>
