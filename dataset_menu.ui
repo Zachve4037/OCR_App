@@ -86,7 +86,7 @@
      <string notr="true">background-color: #8da9c4; color: #eef4ed; border-radius: 8px;</string>
     </property>
     <property name="text">
-     <string>Open Image</string>
+     <string>Open Image Folder</string>
     </property>
    </widget>
    <widget class="QPushButton" name="upload_ann_btn">
@@ -107,7 +107,7 @@
      <string notr="true">background-color: #8da9c4; color: #eef4ed; border-radius: 8px;</string>
     </property>
     <property name="text">
-     <string>Open Annotation</string>
+     <string>Open Annotation Folder</string>
     </property>
    </widget>
    <widget class="QPushButton" name="test_btn">
@@ -131,7 +131,7 @@
      <string>Test</string>
     </property>
    </widget>
-   <widget class="ZoomableGraphicsView" name="image_view">
+   <widget class="QGraphicsView" name="image_view">
     <property name="geometry">
      <rect>
       <x>355</x>
@@ -207,13 +207,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ZoomableGraphicsView</class>
-   <extends>QGraphicsView</extends>
-   <header>ZoomableGraphicsView.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
