@@ -1,7 +1,8 @@
 import traceback
+import os
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, \
-    QMessageBox
+    QMessageBox, QFileDialog
 from Loader import Loader
 from ZoomableGraphicsView import ZoomableGraphicsView
 from src.Tester import Tester
@@ -28,13 +29,13 @@ class GUI(QMainWindow):
         self.image_win.back_btn.clicked.connect(self.show_main_menu)
         self.dataset_win.back_btn.clicked.connect(self.show_main_menu)
 
-        dataset_image_view = self.dataset_win.findChild(ZoomableGraphicsView, "image_view")
+        dataset_image_view = self.dataset_win.findChild(QGraphicsView, "image_view")
         self.loader_dataset_img = Loader(dataset_image_view, "Image")
-        self.dataset_win.upload_img_btn.clicked.connect(self.loader_dataset_img.load_image)
+        self.dataset_win.upload_img_btn.clicked.connect(self.loader_dataset_img.open_image_folder)
 
         dataset_annotation_view = self.dataset_win.findChild(QGraphicsView, "annotation_view")
         self.loader_dataset_ann = Loader(dataset_annotation_view, "Annotation")
-        self.dataset_win.upload_ann_btn.clicked.connect(self.loader_dataset_ann.load_text)
+        self.dataset_win.upload_ann_btn.clicked.connect(self.loader_dataset_ann.open_annotation_folder)
 
         dataset_results_view = self.dataset_win.findChild(QGraphicsView, "results_view")
         self.loader_dataset_res = Loader(dataset_results_view, "Results")
@@ -63,7 +64,7 @@ class GUI(QMainWindow):
         self.image_win.test_btn.clicked.connect(self.perform_test)
 
         self.dataset_win.test_btn = self.dataset_win.findChild(QPushButton, "test_btn")
-        #self.dataset_win.test_btn.clicked.connect(self.perform_test, self.loader_dataset_img, self.loader_dataset_ann)
+        self.dataset_win.test_btn.clicked.connect(self.perform_dataset_test)
 
     def show_main_menu(self):
         self.central_widget.setCurrentWidget(self.main_win)
@@ -93,13 +94,47 @@ class GUI(QMainWindow):
                 }
                 for system in ocr_results.keys()
             }
-            self.loader_image_stats.display_metrics(metricss)
-            self.loader_image_res.display_results(ocr_results)
+            self.loader_image_stats.display_metrics_img(metricss)
+            self.loader_image_res.display_results_img(ocr_results)
 
         except Exception as e:
             print(f"An error occurred during the test: {e}")
             traceback.print_exc()
 
+    def perform_dataset_test(self):
+        try:
+            image_folder = self.loader_dataset_img.get_image_folder()
+            annotation_folder = self.loader_dataset_ann.get_annotation_folder()
+
+            if not image_folder or not annotation_folder:
+                print("Both image and annotation folders must be selected.")
+                return
+
+            tester = Tester()
+            all_metrics = {}
+            all_ocr_results = {}
+
+            for image_file in os.listdir(image_folder):
+                image_path = os.path.join(image_folder, image_file)
+                annotation_path = os.path.join(annotation_folder, os.path.splitext(image_file)[0] + ".txt")
+
+                if not os.path.exists(annotation_path):
+                    print(f"Annotation file for {image_file} not found. Skipping...")
+                    continue
+
+                with open(annotation_path, 'r') as file:
+                    annotation = file.read()
+
+                metrics, ocr_results = tester.test_ocr(image_path, annotation)
+                all_metrics[image_file] = metrics
+                all_ocr_results[image_file] = ocr_results
+
+            self.loader_dataset_stats.display_metrics_dtst(all_metrics)
+            self.loader_dataset_res.display_results_dtst(all_ocr_results)
+
+        except Exception as e:
+            print(f"An error occurred during the dataset test: {e}")
+            traceback.print_exc()
 
 if __name__ == "__main__":
     app = QApplication([])
