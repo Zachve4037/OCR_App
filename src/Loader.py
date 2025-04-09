@@ -30,13 +30,40 @@ class Loader:
                 self.scene.clear()
                 self.add_annotation_text(self.annotation)
 
-    def add_background_text(self, text):
-        text_item = QGraphicsTextItem(text)
-        font = QFont("Arial", 16)
+    def display_metrics(self, metrics):
+        self.scene.clear()
+        formatted_metrics = "\n".join(
+            [f"{system} Metrics:\nCER: {metric['CER']:.2f}\nWER: {metric['WER']:.2f}"
+             for system, metric in metrics.items()]
+        )
+        text_item = QGraphicsTextItem(formatted_metrics)
+        font = QFont("Arial", 10)
         text_item.setFont(font)
         text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
         self.scene.addItem(text_item)
         text_item.setPos(10, 10)
+
+    def display_results(self, ocr_results):
+        self.scene.clear()
+        y_offset = 10
+        for system, result in ocr_results.items():
+            formatted_result = f"Results from {system}:\n{result}\n{'-' * 40}"
+            text_item = QGraphicsTextItem(formatted_result)
+            font = QFont("Arial", 10)
+            text_item.setFont(font)
+            text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+            text_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+            self.scene.addItem(text_item)
+            text_item.setPos(10, y_offset)
+            y_offset += text_item.boundingRect().height() + 10
+
+    def add_background_text(self, text):
+            text_item = QGraphicsTextItem(text)
+            font = QFont("Arial", 16)
+            text_item.setFont(font)
+            text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+            self.scene.addItem(text_item)
+            text_item.setPos(10, 10)
 
     def add_annotation_text(self, text):
         text_item = QGraphicsTextItem(text)

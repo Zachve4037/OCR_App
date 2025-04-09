@@ -18,7 +18,7 @@ class Tester:
                 "CER": cer,
                 "WER": wer
             }
-        return metrics
+        return metrics, ocr_results
 
     def normalize_text(self, text):
         text = re.sub(r"\s+", " ", text).strip()
