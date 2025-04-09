@@ -98,10 +98,8 @@ class Loader:
     def display_results_dtst(self, ocr_results):
         self.scene.clear()
         y_offset = 10
-        max_width = 300  # Set the maximum width for the rows
-
+        max_width = 300
         for image_name, systems_results in ocr_results.items():
-            # Add the image name
             image_name_item = QGraphicsTextItem(f"{image_name}:")
             font = QFont("Arial", 10)
             image_name_item.setFont(font)
@@ -111,7 +109,6 @@ class Loader:
             y_offset += image_name_item.boundingRect().height() + 5
 
             for system, result in systems_results.items():
-                # Add the system name
                 system_name_item = QGraphicsTextItem(f"  {system}:")
                 system_name_item.setFont(font)
                 system_name_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
@@ -119,7 +116,6 @@ class Loader:
                 system_name_item.setPos(10, y_offset)
                 y_offset += system_name_item.boundingRect().height() + 5
 
-                # Add the OCR result with word wrapping
                 wrapped_result = QGraphicsTextItem(result)
                 wrapped_result.setFont(font)
                 wrapped_result.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
@@ -131,12 +127,15 @@ class Loader:
     def display_results_img(self, ocr_results):
         self.scene.clear()
         y_offset = 10
+        max_width = 300
+
         for system, result in ocr_results.items():
             formatted_result = f"Results from {system}:\n{result}\n{'-' * 40}"
             text_item = QGraphicsTextItem(formatted_result)
             font = QFont("Arial", 10)
             text_item.setFont(font)
             text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+            text_item.setTextWidth(max_width)
             text_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
             self.scene.addItem(text_item)
             text_item.setPos(10, y_offset)
@@ -155,6 +154,7 @@ class Loader:
         font = QFont("Arial", 10)
         text_item.setFont(font)
         text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+        text_item.setTextWidth(300)
         self.scene.addItem(text_item)
         text_item.setPos(10, 10)
 
