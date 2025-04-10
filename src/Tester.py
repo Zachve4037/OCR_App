@@ -8,7 +8,6 @@ class Tester:
         pass
 
     def test_ocr(self, image_path, annotation):
-        # Open the image and remove the alpha channel if it exists
         image = Image.open(image_path)
         if image.mode == "RGBA":
             image = image.convert("RGB")
@@ -16,7 +15,6 @@ class Tester:
         ocr_systems = OCRSystem()
         ocr_results = ocr_systems.perform_ocr(image_path)
         metrics = {}
-
         for system, result in ocr_results.items():
             cer = self.calculate_cer(annotation, result)
             wer = self.calculate_wer(annotation, result)
@@ -28,7 +26,7 @@ class Tester:
 
     def normalize_text(self, text):
         if text is None:
-            return ""  # Return an empty string if text is None
+            return ""
         return re.sub(r"\s+", " ", text).strip()
 
     def calculate_cer(self, true_text, ocr_text):

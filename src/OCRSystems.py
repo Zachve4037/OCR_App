@@ -48,7 +48,7 @@ class OCRSystem:
     def ocr_easyocr(self, image_path):
         reader = easyocr.Reader(['en'])
         results = reader.readtext(image_path)
-        extracted_text = ' '.join([result[1] for result in results])  # result[1] contains the text
+        extracted_text = ' '.join([result[1] for result in results])
         return extracted_text
 
     def ocr_system2(self, image_path):
