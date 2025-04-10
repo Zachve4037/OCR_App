@@ -64,6 +64,12 @@ class GUI(QMainWindow):
         self.dataset_win.test_btn = self.dataset_win.findChild(QPushButton, "test_btn")
         self.dataset_win.test_btn.clicked.connect(self.perform_dataset_test)
 
+        self.dataset_win.export_btn = self.dataset_win.findChild(QPushButton, "export_btn")
+        self.dataset_win.export_btn.clicked.connect(self.export_metrics)
+
+    def export_metrics(self):
+        self.loader_dataset_stats.export_metrics()
+
     def show_main_menu(self):
         self.central_widget.setCurrentWidget(self.main_win)
 

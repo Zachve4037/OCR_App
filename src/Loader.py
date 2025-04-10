@@ -1,8 +1,10 @@
+import csv
 import os
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QFont, QColor
-from PyQt5.QtWidgets import QFileDialog, QGraphicsScene, QGraphicsTextItem
+from PyQt5.QtWidgets import QFileDialog, QGraphicsScene, QGraphicsTextItem, QTableWidgetItem, QTableWidget, QVBoxLayout
+
 
 class Loader:
     def __init__(self, view, text):
@@ -14,6 +16,7 @@ class Loader:
         self.image = None
         self.image_folder = None
         self.annotation_folder = None
+        self.table_widget = None
 
     def load_image(self):
         options = QFileDialog.Options()
@@ -65,22 +68,33 @@ class Loader:
                     text_item.setPos(10, 10 + len(self.scene.items()) * 20)
 
     def display_metrics_dtst(self, metrics):
+        # Clear the scene to remove any previous items
         self.scene.clear()
-        formatted_metrics = ""
+
+        # Create a new QTableWidget
+        self.table_widget = QTableWidget()
+        self.table_widget.setColumnCount(3)  # Columns: Image Name, CER, WER
+        self.table_widget.setHorizontalHeaderLabels(["Image Name", "CER", "WER"])
+        self.table_widget.setSortingEnabled(True)  # Enable sorting
+
+        # Populate the table with metrics
+        row = 0
         for image_name, systems_metrics in metrics.items():
-            formatted_metrics += f"{image_name}:\n"
             for system, metric in systems_metrics.items():
-                wer = f"{metric.get('WER'):.2f}" if isinstance(metric.get('WER'), (int, float)) else "N/A"
-                cer = f"{metric.get('CER'):.2f}" if isinstance(metric.get('CER'), (int, float)) else "N/A"
-                formatted_metrics += f"  {system}:\n    WER: {wer}\n    CER: {cer}\n"
-            formatted_metrics += "\n"
-        text_item = QGraphicsTextItem(formatted_metrics)
-        font = QFont("Arial", 10)
-        text_item.setFont(font)
-        text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
-        text_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
-        self.scene.addItem(text_item)
-        text_item.setPos(10, 10)
+                cer = f"{metric.get('CER'):.2f}" if isinstance(metric.get("CER"), (int, float)) else "N/A"
+                wer = f"{metric.get('WER'):.2f}" if isinstance(metric.get("WER"), (int, float)) else "N/A"
+                self.table_widget.insertRow(row)
+                self.table_widget.setItem(row, 0, QTableWidgetItem(f"{image_name} ({system})"))
+                self.table_widget.setItem(row, 1, QTableWidgetItem(cer))
+                self.table_widget.setItem(row, 2, QTableWidgetItem(wer))
+                row += 1
+
+        # Embed the QTableWidget into the QGraphicsView using QGraphicsProxyWidget
+        proxy_widget = self.scene.addWidget(self.table_widget)
+
+        # Adjust the size and position of the table within the QGraphicsView
+        self.table_widget.setMinimumSize(self.view.width() - 20, self.view.height() - 20)
+        proxy_widget.setPos(10, 10)
 
     def display_metrics_img(self, metrics):
         self.scene.clear()
@@ -95,6 +109,23 @@ class Loader:
         text_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.scene.addItem(text_item)
         text_item.setPos(10, 10)
+
+    def export_metrics(self):
+        if not self.table_widget:
+            print("No metrics to export.")
+            return
+
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getSaveFileName(None, "Export Metrics", "", "CSV Files (*.csv)", options=options)
+        if file_name:
+            with open(file_name, mode="w", newline="") as file:
+                writer = csv.writer(file)
+                headers = [self.table_widget.horizontalHeaderItem(i).text() for i in range(self.table_widget.columnCount())]
+                writer.writerow(headers)
+                for row in range(self.table_widget.rowCount()):
+                    row_data = [self.table_widget.item(row, col).text() for col in range(self.table_widget.columnCount())]
+                    writer.writerow(row_data)
+            print(f"Metrics exported to {file_name}")
 
     def display_results_dtst(self, ocr_results):
         self.scene.clear()
