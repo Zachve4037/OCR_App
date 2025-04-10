@@ -7,8 +7,4 @@ Tessract
 
 OCRmyPDF
 
-DocTR
-
 EasyOCR
-
-PaddleOCR
