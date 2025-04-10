@@ -1,12 +1,18 @@
 import re
 import Levenshtein
 from src.OCRSystems import OCRSystem
+from PIL import Image
 
 class Tester:
     def __init__(self):
         pass
 
     def test_ocr(self, image_path, annotation):
+        # Open the image and remove the alpha channel if it exists
+        image = Image.open(image_path)
+        if image.mode == "RGBA":
+            image = image.convert("RGB")
+        image.save(image_path)
         ocr_systems = OCRSystem()
         ocr_results = ocr_systems.perform_ocr(image_path)
         metrics = {}
@@ -21,8 +27,9 @@ class Tester:
         return metrics, ocr_results
 
     def normalize_text(self, text):
-        text = re.sub(r"\s+", " ", text).strip()
-        return text
+        if text is None:
+            return ""  # Return an empty string if text is None
+        return re.sub(r"\s+", " ", text).strip()
 
     def calculate_cer(self, true_text, ocr_text):
         true_text = self.normalize_text(true_text)

@@ -37,13 +37,10 @@ class OCRSystem:
                 reader = PyPDF2.PdfReader(pdf_file)
                 for page in reader.pages:
                     extracted_text += page.extract_text()
-
             return extracted_text
-
         except Exception as e:
             print(f"Error during OCR process: {e}")
             return None
-
         finally:
             if temp_input != input_pdf and os.path.exists(temp_input):
                 os.remove(temp_input)
