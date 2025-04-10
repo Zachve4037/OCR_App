@@ -1,7 +1,9 @@
 import traceback
+from src.OCRSystems import OCRSystem
 import os
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, \
+    QMessageBox, QFileDialog, QRadioButton
 from Loader import Loader
 from ZoomableGraphicsView import ZoomableGraphicsView
 from src.Tester import Tester
@@ -26,6 +28,10 @@ class GUI(QMainWindow):
         self.main_win.dataset_button.clicked.connect(self.show_testing_menu)
         self.image_win.back_btn.clicked.connect(self.show_main_menu)
         self.dataset_win.back_btn.clicked.connect(self.show_main_menu)
+
+        self.image_win.tesseract_btn = self.image_win.findChild(QRadioButton, "tesseract_btn")
+        self.image_win.easyocr_btn = self.image_win.findChild(QRadioButton, "easyocr_btn")
+        self.image_win.ocrmypdf_btn = self.image_win.findChild(QRadioButton, "ocrmypdf_btn")
 
         dataset_image_view = self.dataset_win.findChild(QGraphicsView, "image_view")
         self.loader_dataset_img = Loader(dataset_image_view, "Image")
@@ -87,19 +93,44 @@ class GUI(QMainWindow):
                 print("Image path is missing. Please load an image.")
                 return
             if not annotation:
-                print("Annotation is missing. Please load an annotation file.")
-                return
-            tester = Tester()
-            metrics, ocr_results = tester.test_ocr(image_path, annotation)
-            metricss = {
-                system: {
-                    "CER": metrics[system].get("CER", "N/A"),
-                    "WER": metrics[system].get("WER", "N/A")
+                selected_system = None
+                if self.image_win.tesseract_btn.isChecked():
+                    selected_system = "Tesseract"
+                elif self.image_win.easyocr_btn.isChecked():
+                    selected_system = "EasyOCR"
+                elif self.image_win.ocrmypdf_btn.isChecked():
+                    selected_system = "OCRmyPDF"
+
+                if selected_system:
+                    tester = Tester()
+                    ocr_system = OCRSystem()
+                    ocr_result = None
+
+                    if selected_system == "Tesseract":
+                        ocr_result = ocr_system.ocr_tesseract(image_path)
+                    elif selected_system == "EasyOCR":
+                        ocr_result = ocr_system.ocr_easyocr(image_path)
+                    elif selected_system == "OCRmyPDF":
+                        ocr_result = ocr_system.ocr_ocrmypdf(image_path)
+
+                    if ocr_result:
+                        self.loader_image_res.display_results_img({selected_system: ocr_result})
+                    else:
+                        print(f"OCR failed for {selected_system}.")
+                else:
+                    print("No OCR system selected. Please select a system.")
+            else:
+                tester = Tester()
+                metrics, ocr_results = tester.test_ocr(image_path, annotation)
+                metricss = {
+                    system: {
+                        "CER": metrics[system].get("CER", "N/A"),
+                        "WER": metrics[system].get("WER", "N/A")
+                    }
+                    for system in ocr_results.keys()
                 }
-                for system in ocr_results.keys()
-            }
-            self.loader_image_stats.display_metrics_img(metricss)
-            self.loader_image_res.display_results_img(ocr_results)
+                self.loader_image_stats.display_metrics_img(metricss)
+                self.loader_image_res.display_results_img(ocr_results)
         except Exception as e:
             print(f"An error occurred during the test: {e}")
             traceback.print_exc()
