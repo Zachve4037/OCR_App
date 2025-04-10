@@ -78,6 +78,7 @@ class Loader:
         font = QFont("Arial", 10)
         text_item.setFont(font)
         text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+        text_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.scene.addItem(text_item)
         text_item.setPos(10, 10)
 
@@ -91,6 +92,7 @@ class Loader:
         font = QFont("Arial", 10)
         text_item.setFont(font)
         text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+        text_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.scene.addItem(text_item)
         text_item.setPos(10, 10)
 
@@ -103,6 +105,7 @@ class Loader:
             font = QFont("Arial", 10)
             image_name_item.setFont(font)
             image_name_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+            image_name_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
             self.scene.addItem(image_name_item)
             image_name_item.setPos(10, y_offset)
             y_offset += image_name_item.boundingRect().height() + 5
@@ -117,7 +120,8 @@ class Loader:
                 wrapped_result = QGraphicsTextItem(result)
                 wrapped_result.setFont(font)
                 wrapped_result.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
-                wrapped_result.setTextWidth(max_width)  # Set the maximum width
+                wrapped_result.setTextWidth(max_width)
+                wrapped_result.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
                 self.scene.addItem(wrapped_result)
                 wrapped_result.setPos(20, y_offset)
                 y_offset += wrapped_result.boundingRect().height() + 10
@@ -126,7 +130,6 @@ class Loader:
         self.scene.clear()
         y_offset = 10
         max_width = 300
-
         for system, result in ocr_results.items():
             formatted_result = f"Results from {system}:\n{result}\n{'-' * 40}"
             text_item = QGraphicsTextItem(formatted_result)
