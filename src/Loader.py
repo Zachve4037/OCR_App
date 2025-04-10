@@ -68,16 +68,12 @@ class Loader:
                     text_item.setPos(10, 10 + len(self.scene.items()) * 20)
 
     def display_metrics_dtst(self, metrics):
-        # Clear the scene to remove any previous items
         self.scene.clear()
 
-        # Create a new QTableWidget
         self.table_widget = QTableWidget()
-        self.table_widget.setColumnCount(3)  # Columns: Image Name, CER, WER
+        self.table_widget.setColumnCount(3)
         self.table_widget.setHorizontalHeaderLabels(["Image Name", "CER", "WER"])
-        self.table_widget.setSortingEnabled(True)  # Enable sorting
-
-        # Populate the table with metrics
+        self.table_widget.setSortingEnabled(True)
         row = 0
         for image_name, systems_metrics in metrics.items():
             for system, metric in systems_metrics.items():
@@ -89,10 +85,8 @@ class Loader:
                 self.table_widget.setItem(row, 2, QTableWidgetItem(wer))
                 row += 1
 
-        # Embed the QTableWidget into the QGraphicsView using QGraphicsProxyWidget
         proxy_widget = self.scene.addWidget(self.table_widget)
 
-        # Adjust the size and position of the table within the QGraphicsView
         self.table_widget.setMinimumSize(self.view.width() - 20, self.view.height() - 20)
         proxy_widget.setPos(10, 10)
 
@@ -125,7 +119,6 @@ class Loader:
                 for row in range(self.table_widget.rowCount()):
                     row_data = [self.table_widget.item(row, col).text() for col in range(self.table_widget.columnCount())]
                     writer.writerow(row_data)
-            print(f"Metrics exported to {file_name}")
 
     def display_results_dtst(self, ocr_results):
         self.scene.clear()
