@@ -74,7 +74,6 @@ class Loader:
                 cer = f"{metric.get('CER'):.2f}" if isinstance(metric.get('CER'), (int, float)) else "N/A"
                 formatted_metrics += f"  {system}:\n    WER: {wer}\n    CER: {cer}\n"
             formatted_metrics += "\n"
-
         text_item = QGraphicsTextItem(formatted_metrics)
         font = QFont("Arial", 10)
         text_item.setFont(font)
@@ -115,7 +114,6 @@ class Loader:
                 self.scene.addItem(system_name_item)
                 system_name_item.setPos(10, y_offset)
                 y_offset += system_name_item.boundingRect().height() + 5
-
                 wrapped_result = QGraphicsTextItem(result)
                 wrapped_result.setFont(font)
                 wrapped_result.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
