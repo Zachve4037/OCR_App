@@ -114,7 +114,7 @@ class GUI(QMainWindow):
                         ocr_result = ocr_system.ocr_ocrmypdf(image_path)
 
                     if ocr_result:
-                        self.loader_image_res.display_results_img({selected_system: ocr_result})
+                        self.loader_image_res.display_results_img({selected_system: ocr_result}, None)
                     else:
                         print(f"OCR failed for {selected_system}.")
                 else:
@@ -130,7 +130,7 @@ class GUI(QMainWindow):
                     for system in ocr_results.keys()
                 }
                 self.loader_image_stats.display_metrics_img(metricss)
-                self.loader_image_res.display_results_img(ocr_results)
+                self.loader_image_res.display_results_img(ocr_results, annotation)
         except Exception as e:
             print(f"An error occurred during the test: {e}")
             traceback.print_exc()
@@ -145,6 +145,7 @@ class GUI(QMainWindow):
             tester = Tester()
             all_metrics = {}
             all_ocr_results = {}
+            all_annotations = {}
             for image_file in os.listdir(image_folder):
                 image_path = os.path.join(image_folder, image_file)
                 annotation_path = os.path.join(annotation_folder, os.path.splitext(image_file)[0] + ".txt")
@@ -153,11 +154,12 @@ class GUI(QMainWindow):
                     continue
                 with open(annotation_path, 'r') as file:
                     annotation = file.read()
+                all_annotations[image_file] = annotation
                 metrics, ocr_results = tester.test_ocr(image_path, annotation)
                 all_metrics[image_file] = metrics
                 all_ocr_results[image_file] = ocr_results
             self.loader_dataset_stats.display_metrics_dtst(all_metrics)
-            self.loader_dataset_res.display_results_dtst(all_ocr_results)
+            self.loader_dataset_res.display_results_dtst(all_ocr_results, all_annotations)
         except Exception as e:
             print(f"An error occurred during the dataset test: {e}")
             traceback.print_exc()

@@ -122,40 +122,52 @@ class Loader:
                     row_data = [self.table_widget.item(row, col).text() for col in range(self.table_widget.columnCount())]
                     writer.writerow(row_data)
 
-    def display_results_dtst(self, ocr_results):
+    def display_results_dtst(self, ocr_results, annotations):
         self.scene.clear()
         y_offset = 10
         max_width = 300
+
         for image_name, systems_results in ocr_results.items():
-            image_name_item = QGraphicsTextItem(f"{image_name}:")
+            annotation = annotations.get(image_name, "No annotation available")
+            annotation_text = f"{image_name} Annotation:\n{annotation}\n{'-' * 40}"
+            annotation_item = QGraphicsTextItem(annotation_text)
             font = QFont("Arial", 10)
-            image_name_item.setFont(font)
-            image_name_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
-            image_name_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
-            self.scene.addItem(image_name_item)
-            image_name_item.setPos(10, y_offset)
-            y_offset += image_name_item.boundingRect().height() + 5
+            annotation_item.setFont(font)
+            annotation_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+            annotation_item.setTextWidth(max_width)
+            annotation_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+            self.scene.addItem(annotation_item)
+            annotation_item.setPos(10, y_offset)
+            y_offset += annotation_item.boundingRect().height() + 10
 
             for system, result in systems_results.items():
-                system_name_item = QGraphicsTextItem(f"  {system}:")
-                system_name_item.setFont(font)
-                system_name_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
-                self.scene.addItem(system_name_item)
-                system_name_item.setPos(10, y_offset)
-                y_offset += system_name_item.boundingRect().height() + 5
-                wrapped_result = QGraphicsTextItem(result)
-                wrapped_result.setFont(font)
-                wrapped_result.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
-                wrapped_result.setTextWidth(max_width)
-                wrapped_result.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
-                self.scene.addItem(wrapped_result)
-                wrapped_result.setPos(20, y_offset)
-                y_offset += wrapped_result.boundingRect().height() + 10
+                formatted_result = f"Results from {system}:\n{result}\n{'-' * 40}"
+                text_item = QGraphicsTextItem(formatted_result)
+                text_item.setFont(font)
+                text_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+                text_item.setTextWidth(max_width)
+                text_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+                self.scene.addItem(text_item)
+                text_item.setPos(10, y_offset)
+                y_offset += text_item.boundingRect().height() + 10
 
-    def display_results_img(self, ocr_results):
+    def display_results_img(self, ocr_results, annotation):
         self.scene.clear()
         y_offset = 10
         max_width = 300
+
+        if annotation:
+            annotation_text = f"Annotation:\n{annotation}\n{'-' * 40}"
+            annotation_item = QGraphicsTextItem(annotation_text)
+            font = QFont("Arial", 10)
+            annotation_item.setFont(font)
+            annotation_item.setDefaultTextColor(QColor.fromRgb(238, 244, 237))
+            annotation_item.setTextWidth(max_width)
+            annotation_item.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+            self.scene.addItem(annotation_item)
+            annotation_item.setPos(10, y_offset)
+            y_offset += annotation_item.boundingRect().height() + 10
+
         for system, result in ocr_results.items():
             formatted_result = f"Results from {system}:\n{result}\n{'-' * 40}"
             text_item = QGraphicsTextItem(formatted_result)
