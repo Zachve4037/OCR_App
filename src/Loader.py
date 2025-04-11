@@ -71,11 +71,13 @@ class Loader:
         self.scene.clear()
 
         self.table_widget = QTableWidget()
-        self.table_widget.setColumnCount(4)  # Increase column count to 4
+        self.table_widget.setColumnCount(4)
         self.table_widget.setHorizontalHeaderLabels(["Image Name", "System", "CER", "WER"])
         self.table_widget.setSortingEnabled(True)
 
         row = 0
+        system_averages = {}
+
         for image_name, systems_metrics in metrics.items():
             for system, metric in systems_metrics.items():
                 cer = f"{metric.get('CER'):.2f}" if isinstance(metric.get("CER"), (int, float)) else "N/A"
@@ -86,6 +88,23 @@ class Loader:
                 self.table_widget.setItem(row, 2, QTableWidgetItem(cer))
                 self.table_widget.setItem(row, 3, QTableWidgetItem(wer))
                 row += 1
+
+                if system not in system_averages:
+                    system_averages[system] = {"CER": [], "WER": []}
+                if isinstance(metric.get("CER"), (int, float)):
+                    system_averages[system]["CER"].append(metric["CER"])
+                if isinstance(metric.get("WER"), (int, float)):
+                    system_averages[system]["WER"].append(metric["WER"])
+
+        for system, values in system_averages.items():
+            cer_avg = sum(values["CER"]) / len(values["CER"]) if values["CER"] else 0
+            wer_avg = sum(values["WER"]) / len(values["WER"]) if values["WER"] else 0
+            self.table_widget.insertRow(row)
+            self.table_widget.setItem(row, 0, QTableWidgetItem("overall_average"))
+            self.table_widget.setItem(row, 1, QTableWidgetItem(system))
+            self.table_widget.setItem(row, 2, QTableWidgetItem(f"{cer_avg:.2f}"))
+            self.table_widget.setItem(row, 3, QTableWidgetItem(f"{wer_avg:.2f}"))
+            row += 1
 
         proxy_widget = self.scene.addWidget(self.table_widget)
 
