@@ -71,18 +71,20 @@ class Loader:
         self.scene.clear()
 
         self.table_widget = QTableWidget()
-        self.table_widget.setColumnCount(3)
-        self.table_widget.setHorizontalHeaderLabels(["Image Name", "CER", "WER"])
+        self.table_widget.setColumnCount(4)  # Increase column count to 4
+        self.table_widget.setHorizontalHeaderLabels(["Image Name", "System", "CER", "WER"])
         self.table_widget.setSortingEnabled(True)
+
         row = 0
         for image_name, systems_metrics in metrics.items():
             for system, metric in systems_metrics.items():
                 cer = f"{metric.get('CER'):.2f}" if isinstance(metric.get("CER"), (int, float)) else "N/A"
                 wer = f"{metric.get('WER'):.2f}" if isinstance(metric.get("WER"), (int, float)) else "N/A"
                 self.table_widget.insertRow(row)
-                self.table_widget.setItem(row, 0, QTableWidgetItem(f"{image_name} ({system})"))
-                self.table_widget.setItem(row, 1, QTableWidgetItem(cer))
-                self.table_widget.setItem(row, 2, QTableWidgetItem(wer))
+                self.table_widget.setItem(row, 0, QTableWidgetItem(image_name))
+                self.table_widget.setItem(row, 1, QTableWidgetItem(system))
+                self.table_widget.setItem(row, 2, QTableWidgetItem(cer))
+                self.table_widget.setItem(row, 3, QTableWidgetItem(wer))
                 row += 1
 
         proxy_widget = self.scene.addWidget(self.table_widget)
