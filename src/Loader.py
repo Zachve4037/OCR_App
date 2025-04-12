@@ -141,6 +141,26 @@ class Loader:
                     row_data = [self.table_widget.item(row, col).text() for col in range(self.table_widget.columnCount())]
                     writer.writerow(row_data)
 
+    def export_results(self, ocr_results):
+        folder = QFileDialog.getExistingDirectory(None, "Select Folder to Save Results")
+        if not folder:
+            print("No folder selected. Export canceled.")
+            return
+
+        try:
+            for image_name, systems_results in ocr_results.items():
+                for system, result in systems_results.items():
+                    file_name = f"{image_name}_{system}.txt"
+                    file_path = os.path.join(folder, file_name)
+
+                    with open(file_path, "w") as file:
+                        file.write(f"Results for {image_name} using {system}:\n")
+                        file.write(result)
+
+            print(f"Results exported successfully to {folder}.")
+        except Exception as e:
+            print(f"An error occurred while exporting results: {e}")
+
     def display_results_dtst(self, ocr_results, annotations):
         self.scene.clear()
         y_offset = 10
