@@ -73,6 +73,15 @@ class GUI(QMainWindow):
         self.dataset_win.export_btn = self.dataset_win.findChild(QPushButton, "export_btn")
         self.dataset_win.export_btn.clicked.connect(self.export_metrics)
 
+        self.dataset_win.export_results_btn = self.dataset_win.findChild(QPushButton, "export_results_btn")
+        self.dataset_win.export_results_btn.clicked.connect(self.export_results)
+
+    def export_results(self):
+        try:
+            self.loader_dataset_res.export_results(self.all_ocr_results)
+        except AttributeError:
+            print("No results available to export. Please run the dataset test first.")
+
     def export_metrics(self):
         self.loader_dataset_stats.export_metrics()
 
@@ -158,6 +167,7 @@ class GUI(QMainWindow):
                 metrics, ocr_results = tester.test_ocr(image_path, annotation)
                 all_metrics[image_file] = metrics
                 all_ocr_results[image_file] = ocr_results
+            self.all_ocr_results = all_ocr_results
             self.loader_dataset_stats.display_metrics_dtst(all_metrics)
             self.loader_dataset_res.display_results_dtst(all_ocr_results, all_annotations)
         except Exception as e:
