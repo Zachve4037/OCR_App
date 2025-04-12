@@ -161,6 +161,30 @@ class Loader:
         except Exception as e:
             print(f"An error occurred while exporting results: {e}")
 
+    def export_image_results(self, ocr_results):
+        if not ocr_results:
+            print("No OCR results to export.")
+            return
+        try:
+            folder = QFileDialog.getExistingDirectory(None, "Select Folder to Save Results")
+            if not folder:
+                print("No folder selected. Export canceled.")
+                return
+
+            for system, result in ocr_results.items():
+                image_name = os.path.splitext(os.path.basename(self.image))[0] if self.image else "image"
+                file_name = f"{image_name}_{system}.txt"
+                file_path = os.path.join(folder, file_name)
+
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    file.write(f"OCR System: {system}\n")
+                    file.write(f"Result:\n{result}\n")
+                    file.write("-" * 40 + "\n")
+
+            print(f"OCR results successfully exported to {folder}.")
+        except Exception as e:
+            print(f"An error occurred while exporting results: {e}")
+
     def display_results_dtst(self, ocr_results, annotations):
         self.scene.clear()
         y_offset = 10

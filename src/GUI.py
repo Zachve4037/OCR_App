@@ -76,6 +76,15 @@ class GUI(QMainWindow):
         self.dataset_win.export_results_btn = self.dataset_win.findChild(QPushButton, "export_results_btn")
         self.dataset_win.export_results_btn.clicked.connect(self.export_results)
 
+        self.image_win.export_results_btn = self.image_win.findChild(QPushButton, "export_results_btn")
+        self.image_win.export_results_btn.clicked.connect(self.export_image_results)
+
+    def export_image_results(self):
+            try:
+                self.loader_image_res.export_image_results(self.image_ocr_results)
+            except AttributeError:
+                print("No results available to export. Please run the test first.")
+
     def export_results(self):
         try:
             self.loader_dataset_res.export_results(self.all_ocr_results)
@@ -124,6 +133,7 @@ class GUI(QMainWindow):
 
                     if ocr_result:
                         self.loader_image_res.display_results_img({selected_system: ocr_result}, None)
+                        self.image_ocr_results = {selected_system: ocr_result}
                     else:
                         print(f"OCR failed for {selected_system}.")
                 else:
@@ -138,8 +148,10 @@ class GUI(QMainWindow):
                     }
                     for system in ocr_results.keys()
                 }
+
                 self.loader_image_stats.display_metrics_img(metricss)
                 self.loader_image_res.display_results_img(ocr_results, annotation)
+                self.image_ocr_results = ocr_results
         except Exception as e:
             print(f"An error occurred during the test: {e}")
             traceback.print_exc()
