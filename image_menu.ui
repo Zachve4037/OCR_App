@@ -50,7 +50,7 @@
     <property name="geometry">
      <rect>
       <x>75</x>
-      <y>180</y>
+      <y>120</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -71,7 +71,7 @@
     <property name="geometry">
      <rect>
       <x>75</x>
-      <y>320</y>
+      <y>260</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -201,7 +201,7 @@
     <property name="geometry">
      <rect>
       <x>75</x>
-      <y>250</y>
+      <y>190</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -239,6 +239,27 @@
     </property>
     <property name="text">
      <string>Extract text from image or test OCR Systems on single image</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="export_results_btn">
+    <property name="geometry">
+     <rect>
+      <x>75</x>
+      <y>330</y>
+      <width>200</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #8da9c4; color: #eef4ed; border-radius: 8px;</string>
+    </property>
+    <property name="text">
+     <string>Export Results</string>
     </property>
    </widget>
   </widget>
