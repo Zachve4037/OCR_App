@@ -1,9 +1,11 @@
 import traceback
+
+from src.HelpWindow import HelpWindow
 from src.OCRSystems import OCRSystem
 import os
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, \
-    QMessageBox, QFileDialog, QRadioButton, QCheckBox
+    QMessageBox, QFileDialog, QRadioButton, QCheckBox, QMenu
 from Loader import Loader
 from ZoomableGraphicsView import ZoomableGraphicsView
 from src.Tester import Tester
@@ -23,6 +25,15 @@ class GUI(QMainWindow):
         self.central_widget.addWidget(self.main_win)
         self.central_widget.addWidget(self.image_win)
         self.central_widget.addWidget(self.dataset_win)
+
+        self.main_win.menuHelp = self.main_win.findChild(QMenu, "menuHelp")
+        self.main_win.menuHelp.addAction("Help").triggered.connect(self.show_help)
+
+        self.image_win.menuHelp = self.image_win.findChild(QMenu, "menuHelp")
+        self.image_win.menuHelp.addAction("Help").triggered.connect(self.show_help)
+
+        self.dataset_win.menuHelp = self.dataset_win.findChild(QMenu, "menuHelp")
+        self.dataset_win.menuHelp.addAction("Help").triggered.connect(self.show_help)
 
         self.main_win.image_button.clicked.connect(self.show_ocr_menu)
         self.main_win.dataset_button.clicked.connect(self.show_testing_menu)
@@ -78,6 +89,10 @@ class GUI(QMainWindow):
 
         self.image_win.export_results_btn = self.image_win.findChild(QPushButton, "export_results_btn")
         self.image_win.export_results_btn.clicked.connect(self.export_image_results)
+
+    def show_help(self):
+        help_window = HelpWindow()
+        help_window.exec_()
 
     def export_image_results(self):
             try:
