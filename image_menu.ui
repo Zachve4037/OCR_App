@@ -109,54 +109,6 @@
      <string>Back to Main</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="tesseract_btn">
-    <property name="geometry">
-     <rect>
-      <x>75</x>
-      <y>400</y>
-      <width>150</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #eef4ed; font-size: 14px;</string>
-    </property>
-    <property name="text">
-     <string>Tesseract</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="ocrmypdf_btn">
-    <property name="geometry">
-     <rect>
-      <x>75</x>
-      <y>430</y>
-      <width>150</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #eef4ed; font-size: 14px;</string>
-    </property>
-    <property name="text">
-     <string>OCRmyPDF</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="easyocr_btn">
-    <property name="geometry">
-     <rect>
-      <x>75</x>
-      <y>460</y>
-      <width>150</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #eef4ed; font-size: 14px;</string>
-    </property>
-    <property name="text">
-     <string>EasyOCR</string>
-    </property>
-   </widget>
    <widget class="ZoomableGraphicsView" name="image_view">
     <property name="geometry">
      <rect>
@@ -260,6 +212,54 @@
     </property>
     <property name="text">
      <string>Export Results</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="tesseract_btn">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>400</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>Tesseract</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="ocrmypdf_btn">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>420</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>OCRmyPDF</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="easyocr_btn">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>440</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>EasyOCR</string>
     </property>
    </widget>
   </widget>
