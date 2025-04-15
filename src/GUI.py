@@ -136,7 +136,7 @@ class GUI(QMainWindow):
             if self.image_win.paddleocr_btn.isChecked():
                 selected_systems.append("PaddleOCR")
 
-            if not selected_systems or len(selected_systems) == 4:
+            if not selected_systems:
                 selected_systems = ["Tesseract", "EasyOCR", "OCRmyPDF", "PaddleOCR"]
 
             print(f"Selected systems: {selected_systems}")
@@ -146,18 +146,18 @@ class GUI(QMainWindow):
             tester = Tester()
             ocr_system = OCRSystem()
 
-            for system in selected_systems:
-                if system == "Tesseract":
-                    ocr_results[system] = ocr_system.ocr_tesseract(image_path)
-                elif system == "EasyOCR":
-                    ocr_results[system] = ocr_system.ocr_easyocr(image_path)
-                elif system == "OCRmyPDF":
-                    ocr_results[system] = ocr_system.ocr_ocrmypdf(image_path)
-                elif system == "PaddleOCR":
-                    ocr_results[system] = ocr_system.ocr_paddleocr(image_path)
-
             if annotation:
-                metrics, ocr_results = tester.test_ocr(image_path, annotation)
+                for system in selected_systems:
+                    if system == "Tesseract":
+                        ocr_results[system] = ocr_system.ocr_tesseract(image_path)
+                    elif system == "EasyOCR":
+                        ocr_results[system] = ocr_system.ocr_easyocr(image_path)
+                    elif system == "OCRmyPDF":
+                        ocr_results[system] = ocr_system.ocr_ocrmypdf(image_path)
+                    elif system == "PaddleOCR":
+                        ocr_results[system] = ocr_system.ocr_paddleocr(image_path)
+
+                metrics = tester.calculate_metrics(ocr_results, annotation)
                 metricss = {
                     system: {
                         "CER": metrics[system].get("CER", "N/A"),
@@ -166,6 +166,16 @@ class GUI(QMainWindow):
                     for system in ocr_results.keys()
                 }
                 self.loader_image_stats.display_metrics_img(metricss)
+            else:
+                for system in selected_systems:
+                    if system == "Tesseract":
+                        ocr_results[system] = ocr_system.ocr_tesseract(image_path)
+                    elif system == "EasyOCR":
+                        ocr_results[system] = ocr_system.ocr_easyocr(image_path)
+                    elif system == "OCRmyPDF":
+                        ocr_results[system] = ocr_system.ocr_ocrmypdf(image_path)
+                    elif system == "PaddleOCR":
+                        ocr_results[system] = ocr_system.ocr_paddleocr(image_path)
 
             self.loader_image_res.display_results_img(ocr_results, annotation)
             self.image_ocr_results = ocr_results
