@@ -6,6 +6,7 @@ import pytesseract
 import ocrmypdf
 import easyocr
 from PIL import Image
+from paddleocr import PaddleOCR
 
 class OCRSystem:
     def __init__(self):
@@ -51,19 +52,20 @@ class OCRSystem:
         extracted_text = ' '.join([result[1] for result in results])
         return extracted_text
 
-    def ocr_system2(self, image_path):
-        return "OCR System 2 result"
+    def ocr_paddleocr(self, image_path):
+        ocr = PaddleOCR(use_angle_cls=True, lang='en')
+        result = ocr.ocr(image_path, det=True, rec=True)
+        extracted_text = []
+        for line in result[0]:
+            extracted_text.append(line[1][0])
 
-    def ocr_system3(self, image_path):
-        return "OCR System 3 result"
-
-    def ocr_system4(self, image_path):
-        return "OCR System 4 result"
+        return ' '.join(extracted_text)
 
     def perform_ocr(self, image_path):
         results = {
             "Tesseract": self.ocr_tesseract(image_path),
             "OCRmyPDF": self.ocr_ocrmypdf(image_path, output_pdf="OCRmyPDF.pdf", dpi=300),
             "EasyOCR": self.ocr_easyocr(image_path),
+            "PaddleOCR": self.ocr_paddleocr(image_path)
         }
         return results

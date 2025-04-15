@@ -4,8 +4,7 @@ from src.HelpWindow import HelpWindow
 from src.OCRSystems import OCRSystem
 import os
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QTextEdit, QPushButton, \
-    QMessageBox, QFileDialog, QRadioButton, QCheckBox, QMenu
+from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QPushButton, QCheckBox
 from Loader import Loader
 from ZoomableGraphicsView import ZoomableGraphicsView
 from src.Tester import Tester
