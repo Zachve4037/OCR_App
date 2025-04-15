@@ -47,7 +47,7 @@ class OCRSystem:
                 os.remove(temp_input)
 
     def ocr_easyocr(self, image_path):
-        reader = easyocr.Reader(['en'])
+        reader = easyocr.Reader(['en'], gpu=True)
         results = reader.readtext(image_path)
         extracted_text = ' '.join([result[1] for result in results])
         return extracted_text
@@ -66,6 +66,6 @@ class OCRSystem:
             "Tesseract": self.ocr_tesseract(image_path),
             "OCRmyPDF": self.ocr_ocrmypdf(image_path, output_pdf="OCRmyPDF.pdf", dpi=300),
             "EasyOCR": self.ocr_easyocr(image_path),
-            "PaddleOCR": self.ocr_paddleocr(image_path)
+            "PaddleOCR": self.ocr_paddleocr(image_path),
         }
         return results
