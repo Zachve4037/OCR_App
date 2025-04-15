@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QStyleFactory
+from PyQt5.QtWidgets import QApplication
 import GUI
 
 if __name__ == "__main__":
