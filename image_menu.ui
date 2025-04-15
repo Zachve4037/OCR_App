@@ -278,6 +278,22 @@
      <string>?</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="paddleocr_btn">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>460</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #eef4ed; font-size: 14px;</string>
+    </property>
+    <property name="text">
+     <string>PaddleOCR</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

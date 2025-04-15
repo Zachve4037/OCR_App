@@ -42,6 +42,7 @@ class GUI(QMainWindow):
         self.image_win.tesseract_btn = self.image_win.findChild(QCheckBox, "tesseract_btn")
         self.image_win.easyocr_btn = self.image_win.findChild(QCheckBox, "easyocr_btn")
         self.image_win.ocrmypdf_btn = self.image_win.findChild(QCheckBox, "ocrmypdf_btn")
+        self.image_win.paddleocr_btn = self.image_win.findChild(QCheckBox, "paddleocr_btn")
 
         dataset_image_view = self.dataset_win.findChild(QGraphicsView, "image_view")
         self.loader_dataset_img = Loader(dataset_image_view, "Image")
@@ -132,9 +133,11 @@ class GUI(QMainWindow):
                 selected_systems.append("EasyOCR")
             if self.image_win.ocrmypdf_btn.isChecked():
                 selected_systems.append("OCRmyPDF")
+            if self.image_win.paddleocr_btn.isChecked():
+                selected_systems.append("PaddleOCR")
 
-            if not selected_systems or len(selected_systems) == 3:
-                selected_systems = ["Tesseract", "EasyOCR", "OCRmyPDF"]
+            if not selected_systems or len(selected_systems) == 4:
+                selected_systems = ["Tesseract", "EasyOCR", "OCRmyPDF", "PaddleOCR"]
 
             print(f"Selected systems: {selected_systems}")
 
@@ -150,6 +153,8 @@ class GUI(QMainWindow):
                     ocr_results[system] = ocr_system.ocr_easyocr(image_path)
                 elif system == "OCRmyPDF":
                     ocr_results[system] = ocr_system.ocr_ocrmypdf(image_path)
+                elif system == "PaddleOCR":
+                    ocr_results[system] = ocr_system.ocr_paddleocr(image_path)
 
             if annotation:
                 metrics, ocr_results = tester.test_ocr(image_path, annotation)
