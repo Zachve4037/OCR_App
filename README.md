@@ -8,3 +8,8 @@ Tessract
 OCRmyPDF
 
 EasyOCR
+
+PaddleOCR
+
+Please not that the systems does not support GPU. Application runs only on CPU.
+Based on that information, assume that it takes some time to perform test (roughly 30 seconds per image).
