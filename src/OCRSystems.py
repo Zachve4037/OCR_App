@@ -47,13 +47,13 @@ class OCRSystem:
                 os.remove(temp_input)
 
     def ocr_easyocr(self, image_path):
-        reader = easyocr.Reader(['en'], gpu=True)
+        reader = easyocr.Reader(['en'], gpu=False)
         results = reader.readtext(image_path)
         extracted_text = ' '.join([result[1] for result in results])
         return extracted_text
 
     def ocr_paddleocr(self, image_path):
-        ocr = PaddleOCR(use_angle_cls=True, lang='en')
+        ocr = PaddleOCR(use_gpu=False, use_angle_cls=True, lang='en')
         result = ocr.ocr(image_path, det=True, rec=True)
         extracted_text = []
         for line in result[0]:

@@ -48,3 +48,14 @@ class Tester:
         total_words = len(ref_words)
         wer = levenshtein_distance / total_words if total_words > 0 else 0
         return wer
+
+    def calculate_metrics(self, ocr_results, annotation):
+        metrics = {}
+        for system, result in ocr_results.items():
+            cer = self.calculate_cer(annotation, result)
+            wer = self.calculate_wer(annotation, result)
+            metrics[system] = {
+                "CER": cer,
+                "WER": wer
+            }
+        return metrics
