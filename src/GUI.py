@@ -26,14 +26,14 @@ class GUI(QMainWindow):
         self.central_widget.addWidget(self.image_win)
         self.central_widget.addWidget(self.dataset_win)
 
-        self.main_win.menuHelp = self.main_win.findChild(QMenu, "menuHelp")
-        self.main_win.menuHelp.addAction("Help").triggered.connect(self.show_help)
+        self.main_win.menuHelp = self.main_win.findChild(QPushButton, "menuHelp")
+        self.main_win.menuHelp.clicked.connect(self.show_help)
 
-        self.image_win.menuHelp = self.image_win.findChild(QMenu, "menuHelp")
-        self.image_win.menuHelp.addAction("Help").triggered.connect(self.show_help)
+        self.image_win.menuHelp = self.image_win.findChild(QPushButton, "menuHelp")
+        self.image_win.menuHelp.clicked.connect(self.show_help)
 
-        self.dataset_win.menuHelp = self.dataset_win.findChild(QMenu, "menuHelp")
-        self.dataset_win.menuHelp.addAction("Help").triggered.connect(self.show_help)
+        self.dataset_win.menuHelp = self.dataset_win.findChild(QPushButton, "menuHelp")
+        self.dataset_win.menuHelp.clicked.connect(self.show_help)
 
         self.main_win.image_button.clicked.connect(self.show_ocr_menu)
         self.main_win.dataset_button.clicked.connect(self.show_testing_menu)
