@@ -14,7 +14,7 @@ class GUI(QMainWindow):
         super().__init__()
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
-        self.setGeometry(85, 300, 1750, 640)
+        self.setGeometry(85, 250, 1750, 640)
         self.setWindowTitle("OCR Application")
 
         self.main_win = uic.loadUi("main_win.ui")
