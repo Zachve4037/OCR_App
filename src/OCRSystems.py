@@ -55,6 +55,11 @@ class OCRSystem:
     def ocr_paddleocr(self, image_path):
         ocr = PaddleOCR(use_gpu=False, use_angle_cls=True, lang='en')
         result = ocr.ocr(image_path, det=True, rec=True)
+
+        if not result or not isinstance(result, list) or len(result) == 0 or not isinstance(result[0], list):
+            print(f"Error: Invalid result from PaddleOCR for image: {image_path}")
+            return ""
+
         extracted_text = []
         for line in result[0]:
             extracted_text.append(line[1][0])
