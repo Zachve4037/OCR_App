@@ -3,6 +3,7 @@ import traceback
 from src.HelpWindow import HelpWindow
 from src.OCRSystems import OCRSystem
 import os
+import time
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QPushButton, QCheckBox
 from Loader import Loader
@@ -191,6 +192,8 @@ class GUI(QMainWindow):
             if not image_folder or not annotation_folder:
                 print("Both image and annotation folders must be selected.")
                 return
+
+            start_time = time.time()
             tester = Tester()
             all_metrics = {}
             all_ocr_results = {}
@@ -207,9 +210,14 @@ class GUI(QMainWindow):
                 metrics, ocr_results = tester.test_ocr(image_path, annotation)
                 all_metrics[image_file] = metrics
                 all_ocr_results[image_file] = ocr_results
+
             self.all_ocr_results = all_ocr_results
             self.loader_dataset_stats.display_metrics_dtst(all_metrics)
             self.loader_dataset_res.display_results_dtst(all_ocr_results, all_annotations)
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Dataset testing completed in {elapsed_time:.2f} seconds.")
+
         except Exception as e:
             print(f"An error occurred during the dataset test: {e}")
             traceback.print_exc()
