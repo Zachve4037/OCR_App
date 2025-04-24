@@ -49,13 +49,24 @@ class Tester:
         wer = levenshtein_distance / total_words if total_words > 0 else 0
         return wer
 
-    def calculate_metrics(self, ocr_results, annotation):
-        metrics = {}
-        for system, result in ocr_results.items():
-            cer = self.calculate_cer(annotation, result)
-            wer = self.calculate_wer(annotation, result)
-            metrics[system] = {
-                "CER": cer,
-                "WER": wer
-            }
-        return metrics
+    def calculate_metrics(self, ocr_result, annotation):
+        try:
+            cer = self.calculate_cer(annotation, ocr_result)
+            wer = self.calculate_wer(annotation, ocr_result)
+            return {"CER": cer, "WER": wer}
+        except Exception as e:
+            print(f"Error calculating metrics: {e}")
+            return {"CER": "N/A", "WER": "N/A"}
+
+    def test_single_ocr(self, system, image_path):
+        ocrsystems = OCRSystem()
+        if system == "Tesseract":
+            return ocrsystems.ocr_tesseract(image_path)
+        elif system == "EasyOCR":
+            return ocrsystems.ocr_easyocr(image_path)
+        elif system == "OCRmyPDF":
+            return ocrsystems.ocr_ocrmypdf(image_path)
+        elif system == "PaddleOCR":
+            return ocrsystems.ocr_paddleocr(image_path)
+        else:
+            raise ValueError(f"Unknown OCR system: {system}")
