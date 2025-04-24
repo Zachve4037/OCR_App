@@ -158,11 +158,23 @@ class GUI(QMainWindow):
                     elif system == "PaddleOCR":
                         ocr_results[system] = ocr_system.ocr_paddleocr(image_path)
 
-                metrics = tester.calculate_metrics(ocr_results, annotation)
+                print(f"OCR Results: {ocr_results}")
+
+                for system in selected_systems:
+                    if system in ocr_results:
+                        try:
+                            metrics[system] = tester.calculate_metrics(ocr_results[system], annotation)
+                        except Exception as e:
+                            print(f"Error calculating metrics for {system}: {e}")
+                            metrics[system] = {"CER": "N/A", "WER": "N/A", "Time": "N/A"}
+
+                print(f"Metrics: {metrics}")
+
                 metricss = {
                     system: {
                         "CER": metrics[system].get("CER", "N/A"),
-                        "WER": metrics[system].get("WER", "N/A")
+                        "WER": metrics[system].get("WER", "N/A"),
+                        "Time": metrics[system].get("Time", "N/A")
                     }
                     for system in ocr_results.keys()
                 }
@@ -177,6 +189,8 @@ class GUI(QMainWindow):
                         ocr_results[system] = ocr_system.ocr_ocrmypdf(image_path)
                     elif system == "PaddleOCR":
                         ocr_results[system] = ocr_system.ocr_paddleocr(image_path)
+
+                print(f"OCR Results: {ocr_results}")
 
             self.loader_image_res.display_results_img(ocr_results, annotation)
             self.image_ocr_results = ocr_results
@@ -193,30 +207,41 @@ class GUI(QMainWindow):
                 print("Both image and annotation folders must be selected.")
                 return
 
-            start_time = time.time()
             tester = Tester()
             all_metrics = {}
             all_ocr_results = {}
             all_annotations = {}
+            all_times = {}
+
             for image_file in os.listdir(image_folder):
                 image_path = os.path.join(image_folder, image_file)
                 annotation_path = os.path.join(annotation_folder, os.path.splitext(image_file)[0] + ".txt")
                 if not os.path.exists(annotation_path):
                     print(f"Annotation file for {image_file} not found. Skipping...")
                     continue
+
                 with open(annotation_path, 'r') as file:
                     annotation = file.read()
                 all_annotations[image_file] = annotation
-                metrics, ocr_results = tester.test_ocr(image_path, annotation)
+
+                metrics = {}
+                ocr_results = {}
+                times = {}
+
+                for system in ["Tesseract", "EasyOCR", "OCRmyPDF", "PaddleOCR"]:
+                    start_time = time.time()
+                    ocr_results[system] = tester.test_single_ocr(system, image_path)
+                    elapsed_time = time.time() - start_time
+                    times[system] = elapsed_time
+                    metrics[system] = tester.calculate_metrics(ocr_results[system], annotation)
+
                 all_metrics[image_file] = metrics
                 all_ocr_results[image_file] = ocr_results
+                all_times[image_file] = times
 
             self.all_ocr_results = all_ocr_results
-            self.loader_dataset_stats.display_metrics_dtst(all_metrics)
+            self.loader_dataset_stats.display_metrics_dtst(all_metrics, all_times)
             self.loader_dataset_res.display_results_dtst(all_ocr_results, all_annotations)
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            print(f"Dataset testing completed in {elapsed_time:.2f} seconds.")
 
         except Exception as e:
             print(f"An error occurred during the dataset test: {e}")

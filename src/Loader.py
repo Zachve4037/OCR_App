@@ -66,12 +66,12 @@ class Loader:
                     self.scene.addItem(text_item)
                     text_item.setPos(10, 10 + len(self.scene.items()) * 20)
 
-    def display_metrics_dtst(self, metrics):
+    def display_metrics_dtst(self, metrics, times):
         self.scene.clear()
 
         self.table_widget = QTableWidget()
-        self.table_widget.setColumnCount(4)
-        self.table_widget.setHorizontalHeaderLabels(["Image Name", "System", "CER", "WER"])
+        self.table_widget.setColumnCount(5)
+        self.table_widget.setHorizontalHeaderLabels(["Image Name", "System", "CER", "WER", "Time (s)"])
         self.table_widget.setSortingEnabled(True)
 
         row = 0
@@ -81,28 +81,35 @@ class Loader:
             for system, metric in systems_metrics.items():
                 cer = f"{metric.get('CER'):.2f}" if isinstance(metric.get("CER"), (int, float)) else "N/A"
                 wer = f"{metric.get('WER'):.2f}" if isinstance(metric.get("WER"), (int, float)) else "N/A"
+                time_taken = f"{times[image_name].get(system, 0):.2f}"
+
                 self.table_widget.insertRow(row)
                 self.table_widget.setItem(row, 0, QTableWidgetItem(image_name))
                 self.table_widget.setItem(row, 1, QTableWidgetItem(system))
                 self.table_widget.setItem(row, 2, QTableWidgetItem(cer))
                 self.table_widget.setItem(row, 3, QTableWidgetItem(wer))
+                self.table_widget.setItem(row, 4, QTableWidgetItem(time_taken))
                 row += 1
 
                 if system not in system_averages:
-                    system_averages[system] = {"CER": [], "WER": []}
+                    system_averages[system] = {"CER": [], "WER": [], "Time": []}
                 if isinstance(metric.get("CER"), (int, float)):
                     system_averages[system]["CER"].append(metric["CER"])
                 if isinstance(metric.get("WER"), (int, float)):
                     system_averages[system]["WER"].append(metric["WER"])
+                system_averages[system]["Time"].append(times[image_name].get(system, 0))
 
         for system, values in system_averages.items():
             cer_avg = sum(values["CER"]) / len(values["CER"]) if values["CER"] else 0
             wer_avg = sum(values["WER"]) / len(values["WER"]) if values["WER"] else 0
+            time_avg = sum(values["Time"]) / len(values["Time"]) if values["Time"] else 0
+
             self.table_widget.insertRow(row)
             self.table_widget.setItem(row, 0, QTableWidgetItem("overall_average"))
             self.table_widget.setItem(row, 1, QTableWidgetItem(system))
             self.table_widget.setItem(row, 2, QTableWidgetItem(f"{cer_avg:.2f}"))
             self.table_widget.setItem(row, 3, QTableWidgetItem(f"{wer_avg:.2f}"))
+            self.table_widget.setItem(row, 4, QTableWidgetItem(f"{time_avg:.2f}"))
             row += 1
 
         proxy_widget = self.scene.addWidget(self.table_widget)
