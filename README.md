@@ -6,7 +6,7 @@ systems with your input and annotation of the input. Tests can be performed
 on single image or on a directory with images.
 ## Bachelor's thesis:
 OCR Solutions for Text Recognition in Real-World Scenes and Structured Documents
-# OCR Systems included in application
+## OCR Systems included in application
 Tesseract - Structured documents
 
 OCRmyPDF - Structured documents 
