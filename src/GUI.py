@@ -1,14 +1,16 @@
-import traceback
-
-from src.HelpWindow import HelpWindow
-from src.OCRSystems import OCRSystem
 import os
 import time
+import traceback
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QGraphicsView, QPushButton, QCheckBox
+
+from HelpWindow import HelpWindow
 from Loader import Loader
+from OCRSystems import OCRSystem
+from Tester import Tester
 from ZoomableGraphicsView import ZoomableGraphicsView
-from src.Tester import Tester
+
 
 class GUI(QMainWindow):
     def __init__(self):

@@ -1,7 +1,10 @@
 import re
+
 import Levenshtein
-from src.OCRSystems import OCRSystem
 from PIL import Image
+
+from OCRSystems import OCRSystem
+
 
 class Tester:
     def __init__(self):

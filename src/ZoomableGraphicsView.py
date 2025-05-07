@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QGraphicsView
-from PyQt5.QtCore import Qt
 
 class ZoomableGraphicsView(QGraphicsView):
     def __init__(self, parent=None):
@@ -14,3 +13,4 @@ class ZoomableGraphicsView(QGraphicsView):
             self.scale(self.zoom_factor, self.zoom_factor)
         else:
             self.scale(1 / self.zoom_factor, 1 / self.zoom_factor)
+

@@ -1,12 +1,14 @@
 import os
 import shutil
+
 import PyPDF2
-import img2pdf
-import pytesseract
-import ocrmypdf
 import easyocr
+import img2pdf
+import ocrmypdf
+import pytesseract
 from PIL import Image
 from paddleocr import PaddleOCR
+
 
 class OCRSystem:
     def __init__(self):
