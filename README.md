@@ -28,4 +28,4 @@ does not work for you, try nuitka (it took 4 hours to one build, but it worked a
 prints you the actual problems :DD)). It also contains console, so you can see the problems
 if you encounter some of them. If you want to run the executable file, feel free to do so. 
 I strongly suggest to pull the repository, create a virtual environment 
-and then run the app.
+and then run the app. 
