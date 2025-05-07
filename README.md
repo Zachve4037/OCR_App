@@ -21,9 +21,7 @@ Based on that information, assume that it takes some time to perform test
 I suggest using paddle ocr or tesseract since they are the fastest ones.
 
 # Installation
-I have added the executable file to the repository. I suggest using it only if you are
-not able to pull the repository and run the project by your self. The exe takes time
-to start (roughly 30 seconds), because of large libraries and models of OCR systems,
-but it will run (maybe). The python was not developed 
-for exe usage so I am not sure if it will work. So if you can, pull the repository
-and download the necessary dependencies.
+I tried to make executable file, I made it but it is too big to upload it here. 
+So your only option is to pull the repository, download the necessary libraries
+and dependencies and then run the app. If you need help with that, please
+contact me :D.
