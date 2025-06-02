@@ -4,7 +4,9 @@ import PyPDF2
 import img2pdf
 import pytesseract
 from PIL import Image
+import easyocr
 from paddleocr import PaddleOCR
+import ocrmypdf
 
 class OCRSystem:
     def __init__(self):
@@ -12,7 +14,7 @@ class OCRSystem:
 
     def ocr_tesseract(self, image_path):
         image = Image.open(image_path)
-        return pytesseract.image_to_string(image, lang = 'eng')
+        return pytesseract.image_to_string(image, lang='eng')
 
     def image_to_pdf(self, image_path, pdf_path):
         with open(pdf_path, "wb") as f:
@@ -51,7 +53,7 @@ class OCRSystem:
         return extracted_text
 
     def ocr_paddleocr(self, image_path):
-        ocr = PaddleOCR(use_gpu=False, use_angle_cls=True, lang='en')
+        ocr = PaddleOCR(use_angle_cls=True, lang='en', use_gpu = False)
         result = ocr.ocr(image_path, det=True, rec=True)
 
         if not result or not isinstance(result, list) or len(result) == 0 or not isinstance(result[0], list):

@@ -29,3 +29,5 @@ prints you the actual problems :DD)). It also contains console, so you can see t
 if you encounter some of them. If you want to run the executable file, feel free to do so. 
 I strongly suggest to pull the repository, create a virtual environment 
 and then run the app. 
+If you are encountering some problems with installing paddleocr, try installing this paddleocr==2.7.2
+.
